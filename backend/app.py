@@ -15,7 +15,12 @@ from flask import Flask, jsonify, request, make_response
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:3000"], supports_credentials=True)
+FRONTEND_URL = os.getenv('FRONTEND_URL', 'http://localhost:3000')
+CORS(app, origins=[FRONTEND_URL, 'http://localhost:3000'], supports_credentials=True)
+
+IS_PRODUCTION = os.getenv('IS_PRODUCTION', 'false').lower() == 'true'
+COOKIE_SAMESITE = 'None' if IS_PRODUCTION else 'Strict'
+COOKIE_SECURE = IS_PRODUCTION
 
 # Local SQLite for development before we move to AWS RDS PostgreSQL
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///local_db.sqlite')
@@ -318,13 +323,12 @@ def login():
         'message': 'Logged in securely.'
     })
     
-    # Set HttpOnly cookie
     response.set_cookie(
         'auth_token',
         token,
         httponly=True,
-        secure=False, # Set to True in production with HTTPS
-        samesite='Strict',
+        secure=COOKIE_SECURE,
+        samesite=COOKIE_SAMESITE,
         max_age=int(TOKEN_EXPIRY[user.role].total_seconds())
     )
     return response
@@ -334,7 +338,7 @@ def login():
 def logout():
     # With stateless JWTs via cookies, logout means deleting the cookie
     response = jsonify({'message': 'Logged out successfully.'})
-    response.set_cookie('auth_token', '', expires=0, httponly=True, samesite='Strict')
+    response.set_cookie('auth_token', '', expires=0, httponly=True, secure=COOKIE_SECURE, samesite=COOKIE_SAMESITE)
     return response
 
 
