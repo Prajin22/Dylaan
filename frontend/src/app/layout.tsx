@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AgriB2B Global | Premium Agriculture Exports",
+  title: "Dylaan International | Premium Agriculture Exports",
   description:
     "Sourcing high-quality flowers, sacred leaves and fresh vegetables globally. Real-time AWB tracking and premium B2B service.",
 };

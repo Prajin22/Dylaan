@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #F0FDFA; /* Soft Teal */
-  --foreground: #134E4A; /* Deep Forest Text */
+  --background: linear-gradient(135deg, #B5EFD9 0%, #A0DBC6 100%);
+  --foreground: #041A12;
 }
 
 @theme inline {
@@ -11,21 +11,18 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   
-  /* UI/UX Pro Max - Agriculture/Tech Theme */
-  --color-primary-50: #f0fdf4;
-  --color-primary-100: #dcfce7;
-  --color-primary-200: #bbf7d0;
-  --color-primary-300: #86efac;
-  --color-primary-400: #4ade80;
-  --color-primary-500: #22c55e;
-  --color-primary-600: #16a34a;
-  --color-primary-700: #15803d; /* Base Primary */
-  --color-primary-800: #166534;
-  --color-primary-900: #14532d;
-  
-  --color-teal-base: #0F766E; /* Trust Teal */
-  --color-accent-gold: #A16207; /* Harvest Gold */
-  --color-accent-orange: #EA580C; /* Action Orange */
+  /* User Requested Custom Palette injected into Teal */
+  --color-teal-50: #E2F8F0;
+  --color-teal-100: #B5EFD9; /* Color 1: Lightest Mint */
+  --color-teal-200: #A0DBC6; /* Color 2: Seafoam */
+  --color-teal-300: #86C5AE; /* Color 3: Medium Mint */
+  --color-teal-400: #6DB39B;
+  --color-teal-500: #4F9E84;
+  --color-teal-600: #35836B;
+  --color-teal-700: #20624E;
+  --color-teal-800: #124133;
+  --color-teal-900: #041A12; /* Color 4: Darkest Forest */
+  --color-teal-950: #020C08;
   
   /* Status Colors */
   --color-success: #22C55E;
@@ -34,15 +31,9 @@
   --color-neutral: #64748B;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #042F2E; /* Very Dark Teal */
-    --foreground: #F0FDFA;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  background-attachment: fixed;
 }
