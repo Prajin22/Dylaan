@@ -1,0 +1,32 @@
+services:
+  # 1. Backend API (Flask)
+  - type: web
+    name: dylaan-backend
+    env: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: IS_PRODUCTION
+        value: "true"
+      # Give the backend access to the frontend URL automatically
+      - key: FRONTEND_URL
+        fromService:
+          type: web
+          name: dylaan-frontend
+          envVarKey: RENDER_EXTERNAL_URL
+
+  # 2. Frontend App (Next.js)
+  - type: web
+    name: dylaan-frontend
+    env: node
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      # Tell the frontend where the backend is located automatically
+      - key: NEXT_PUBLIC_API_URL
+        fromService:
+          type: web
+          name: dylaan-backend
+          property: host

@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useCallback } from "react";
 
-const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+const API = BASE_URL.endsWith('/api') ? BASE_URL : `${BASE_URL}/api`;
 
 type Product = {
   id: number;
